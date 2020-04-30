@@ -1168,6 +1168,18 @@ func (v *Viper) find(lcaseKey string, flagDefault bool) interface{} {
 	return nil
 }
 
+func Unset(key string) { v.Unset(key, value) }
+func (v *Viper) Unset(key string) {
+	// If alias passed in, then set the proper override
+	key = v.realKey(strings.ToLower(key))
+
+	path := strings.Split(key, v.keyDelim)
+	lastKey := strings.ToLower(path[len(path)-1])
+	deepestMap := deepSearch(v.override, path[0:len(path)-1])
+
+	delete(deepestMap, lastKey)
+}
+
 func readAsCSV(val string) ([]string, error) {
 	if val == "" {
 		return []string{}, nil
