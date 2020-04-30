@@ -1168,7 +1168,7 @@ func (v *Viper) find(lcaseKey string, flagDefault bool) interface{} {
 	return nil
 }
 
-func Unset(key string) { v.Unset(key, value) }
+func Unset(key string) { v.Unset(key/*,value*/) }
 func (v *Viper) Unset(key string) {
 	// If alias passed in, then set the proper override
 	key = v.realKey(strings.ToLower(key))
